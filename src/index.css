@@ -1,6 +1,8 @@
 .wrapper {
   display: grid;
   grid-template-columns: 20% 80%;
+  height: 600px;
+  align-items: stretch;
 }
 
 .navbar {
@@ -14,7 +16,12 @@
   max-width: 100%;
 }
 
-#beer-list {
+.main-page {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+#style-list {
   list-style-type: none;
   padding: 20px;
   font-family: brother-1816, sans-serif;
@@ -30,7 +37,7 @@
 
 #monk-by-the-sea {
   max-height: 150%;
-  max-width: 100%;
+  max-width: 150%;
 }
 
 /* body {
@@ -52,7 +59,7 @@
   font-size: 80px;
 }
 
-/* .menu {
+.menu {
   display: inline;
 
   position: absolute;
@@ -61,39 +68,44 @@
   padding-right: 30px;
   width: 100%;
   text-align: right;
-} */
+
+
+}
 
 #option-1 {
   display: inline;
+  padding: 10px;
 
-  position: absolute;
+  /* position: absolute;
   left: 0;
   top: 25%;
   padding-right: 270px;
   width: 100%;
-  text-align: right;
+  text-align: right; */
 }
 
 #option-2 {
   display: inline;
+  padding: 10px;
 
-  position: absolute;
+  /* position: absolute;
   left: 0;
   top: 25%;
   padding-right: 150px;
   width: 100%;
-  text-align: right;
+  text-align: right; */
 }
 
 #option-3 {
   display: inline;
+  /* padding: 10px; */
 
-  position: absolute;
+  /* position: absolute;
   left: 0;
   top: 25%;
   padding-right: 30px;
   width: 100%;
-  text-align: right;
+  text-align: right; */
 }
 
 .headers {
@@ -101,4 +113,22 @@
   font-style: normal;
   font-weight: 700;
   color: #2d2d2b;
+  padding-left: 20px;
+}
+
+#beer-list {
+  list-style-type: none;
+}
+
+#featured-list {
+  list-style-type: none;
+  padding: 20px;
+}
+
+li.beer-name {
+  padding: 10px;
+}
+
+li.style-name {
+  padding: 2px;
 }

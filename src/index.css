@@ -1,0 +1,104 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.navbar {
+  height: 80px;
+}
+
+.sidebar {
+  background-color: black;
+  color: white;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+#beer-list {
+  list-style-type: none;
+  padding: 20px;
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+}
+
+#monk-logo {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 12px;
+}
+
+#monk-by-the-sea {
+  max-height: 150%;
+  max-width: 100%;
+}
+
+/* body {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Caspar_David_Friedrich_-_Der_M%C3%B6nch_am_Meer_-_Google_Art_Project.jpg/1200px-Caspar_David_Friedrich_-_Der_M%C3%B6nch_am_Meer_-_Google_Art_Project.jpg");
+  background-repeat: no-repeat;
+} */
+
+.center {
+  position: absolute;
+  left: 0;
+  top: 32%;
+  padding-right: 30px;
+  width: 100%;
+  text-align: right;
+
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 80px;
+}
+
+/* .menu {
+  display: inline;
+
+  position: absolute;
+  left: 0;
+  top: 32%;
+  padding-right: 30px;
+  width: 100%;
+  text-align: right;
+} */
+
+#option-1 {
+  display: inline;
+
+  position: absolute;
+  left: 0;
+  top: 25%;
+  padding-right: 270px;
+  width: 100%;
+  text-align: right;
+}
+
+#option-2 {
+  display: inline;
+
+  position: absolute;
+  left: 0;
+  top: 25%;
+  padding-right: 150px;
+  width: 100%;
+  text-align: right;
+}
+
+#option-3 {
+  display: inline;
+
+  position: absolute;
+  left: 0;
+  top: 25%;
+  padding-right: 30px;
+  width: 100%;
+  text-align: right;
+}
+
+.headers {
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  color: #2d2d2b;
+}

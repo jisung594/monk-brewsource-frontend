@@ -23,10 +23,11 @@
 
 #style-list {
   list-style-type: none;
-  padding: 20px;
+  padding: 10px;
   font-family: brother-1816, sans-serif;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 20px;
+  font-size: 60px;
 }
 
 #monk-logo {
@@ -129,6 +130,7 @@ li.beer-name {
   padding: 10px;
 }
 
-li.style-name {
-  padding: 2px;
+
+input {
+  width: 80%;
 }

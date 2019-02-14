@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // VARIABLES
+  let styles = ["ALE","LAGER","STOUT","PORTER","MALT","FLAVORED"]
   let styleUl = document.querySelector('#style-list')
   let featuredUl = document.querySelector('#featured-list')
   let beerUl = document.querySelector('#beer-list')
   const bgImage = document.querySelector('#monk-by-the-sea')
   let mainPage = document.querySelector('.main-page')
+  const sidebar = document.querySelector(".sidebar")
+
   // const beerURL = "http://api.brewerydb.com/v2/beers/?key=afe69a87d4126239031c4abba79cd743"
 
 
-  // Get SIDEBAR on DOM
+  // Get SIDEBAR on DOM --------------------------------------------------------
   sidebarList();
   function sidebarList() {
     fetch("http://localhost:3000/api/v1/beers")
@@ -26,38 +29,125 @@ document.addEventListener('DOMContentLoaded', () => {
         <li>${beers[32]["name"]}</li>
         `
       })
+
   }
 
-
+// Shows Complete List of Beers (BEERS menu option in navbar) ------------------
   const menu = document.querySelector(".menu")
   menu.addEventListener("click", menuOption)
+
+
 
   function menuOption(event) {
     mainPage.innerHTML = ""
 
     // Show Beer Index
     if (event.target.id === "option-1") {
-      fetch("http://localhost:3000/api/v1/beers")
-        .then(res => res.json())
-        .then(beers => beers.forEach(beer => {
-          beerUl.innerHTML += `<li class="beer-name" data-id="${beer.id}">${beer.name}</li>`
-        }))
+      // fetch("http://localhost:3000/api/v1/beers")
+      //   .then(res => res.json())
+      //   .then(beers => beers.forEach(beer => {
+      //     beerUl.innerHTML += `<li class="beer-name" data-id="${beer.id}">${beer.name}</li>`
+      //   }))
+        // mainPage.append(beerUl)
 
-        let styles = ["ALE","LAGER","STOUT","PORTER","MALT","FLAVORED"]
 
-        styles.forEach(style => {
-          let li = document.createElement('li')
-          li.innerText = style
-          li.setAttribute("class", "style-name")
-          styleUl.append(li)
-          mainPage.append(styleUl)
-        })
-
-        mainPage.append(beerUl)
+      styles.forEach(style => {
+        let li = document.createElement('li')
+        li.innerText = style
+        li.setAttribute("id", `${li.innerText}`)
+        styleUl.append(li)
+        mainPage.append(styleUl)
+      })
     }
   }
 
+  styleUl.addEventListener("click", showBeersByStyle)
 
+  function showBeersByStyle(event) {
+    mainPage.innerHTML = ""
+
+      fetch(`http://localhost:3000/api/v1/beers`)
+        .then(res => res.json())
+        .then(beers => beers.forEach(beer => {
+
+          if (event.target.id === "ALE") {
+            if (beer.name.includes("Ale")) {
+              let aleLi = document.createElement("li")
+              aleLi.innerText = beer.name + " (" + beer.style + ")"
+              aleLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(aleLi)
+              mainPage.append(beerUl)
+            }
+          }
+
+          if (event.target.id === "LAGER") {
+            if (beer.name.includes("Lager")) {
+              let lagerLi = document.createElement("li")
+              lagerLi.innerText = beer.name + " (" + beer.style + ")"
+              lagerLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(lagerLi)
+              mainPage.append(beerUl)
+            }
+          }
+
+          if (event.target.id === "STOUT") {
+            if (beer.name.includes("Stout")) {
+              let stoutLi = document.createElement("li")
+              stoutLi.innerText = beer.name + " (" + beer.style + ")"
+              stoutLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(stoutLi)
+              mainPage.append(beerUl)
+            }
+          }
+
+          if (event.target.id === "PORTER") {
+            if (beer.name.includes("Porter")) {
+              let porterLi = document.createElement("li")
+              porterLi.innerText = beer.name + " (" + beer.style + ")"
+              porterLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(porterLi)
+              mainPage.append(beerUl)
+            }
+          }
+
+          if (event.target.id === "MALT") {
+            if (beer.description.includes("malt")) {
+              let maltLi = document.createElement("li")
+              maltLi.innerText = beer.name + " (" + beer.style + ")"
+              maltLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(maltLi)
+              mainPage.append(beerUl)
+            }
+          }
+
+          if (event.target.id === "FLAVORED") {
+            if (beer.description.includes("flavor")) {
+              let porterLi = document.createElement("li")
+              porterLi.innerText = beer.name + " (" + beer.style + ")"
+              beerUl.append(porterLi)
+              mainPage.append(beerUl)
+            }
+          }
+
+          // styles.forEach(style => {
+          //   if (event.target.id === style) {
+          //     if (beer.description.includes(style)) {
+          //       let li = document.createElement("li")
+          //       li.innerText = beer.name + " (" + beer.style + ")"
+          //       mainPage.append(li)
+          //     }
+          //   }
+          // })
+
+        }))
+  }
+
+
+
+
+
+
+// Shows Detail Page of Specific Beer ------------------------------------------
   beerUl.addEventListener("click", showBeerDetailPage)
 
   function showBeerDetailPage(event) {
@@ -68,16 +158,71 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(beer => {
         mainPage.innerHTML = `
-        <div>
+        <div data-id="${beer.id}">
         <h1>${beer.name}</h1>
         <img src="${beer.image}">
         <h4>Style: ${beer.style}</h4>
         <p>${beer.description}</p>
+        <button type="button" name="button" id="add-review-btn">Review Your Beer</button>
         </div>
         `
-        console.log(beer);
+        const addReviewBtn = document.querySelector("#add-review-btn")
+        addReviewBtn.addEventListener("click", showReviewFormOnDom)
       })
+
   }
+
+  // Show Form to Add Review ("Review Your Beer" button) -------------------------
+
+  function showReviewFormOnDom(event) {
+    // mainPage.innerHTML = ""
+
+    mainPage.innerHTML += `<form id="add-review-form" action="index.html" method="post">
+      Title: <input type="text" name="title" value=""><br>
+      Content: <input type="text" name="content" value=""><br>
+      Rating: <input type="number" min="0" name="rating" value=""><br>
+      <!-- Beer: <input type="text" name="beer" value=""><br> -->
+      <button type="submit" name="button">Submit Review</button>
+    </form>`
+
+    let addReviewForm = document.querySelector("#add-review-form")
+    addReviewForm.addEventListener("submit", createReview)
+  }
+
+  // add event listener on mainPage (event.target should be submit button)
+  // mainPage.addEventListener("submit", createReview)
+
+
+  function createReview(event) {
+    event.preventDefault();
+    let titleField = event.target.title.value
+    let contentField = event.target.content.value
+    let ratingField = event.target.rating.value
+    // let beerField = event.target.beer.value
+    let beerId = event.target.previousElementSibling.dataset.id
+
+    fetch("http://localhost:3000/api/v1/reviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: titleField,
+        content: contentField,
+        rating: ratingField,
+        beer_id: beerId,
+        user_id: 1
+      })
+    })
+      .then(res => res.json())
+      .then(review => displayNewReview)
+  }
+
+  // function displayNewReview() {
+  //
+  // }
+
+
 
 
 

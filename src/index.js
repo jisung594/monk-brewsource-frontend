@@ -1,7 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // VARIABLES
-  let styles = ["ALE","LAGER","STOUT","PORTER","MALT","FLAVORED"]
+  let styles = [
+    "ALE",
+    "LAGER",
+    "PILSNER",
+    "STOUT",
+    "PORTER",
+    "HEFEWEIZEN",
+    "FRUIT"
+  ]
   let styleUl = document.querySelector('#style-list')
   let featuredUl = document.querySelector('#featured-list')
   let beerUl = document.querySelector('#beer-list')
@@ -29,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <li>${beers[32]["name"]}</li>
         `
       })
-
   }
 
 // Shows Complete List of Beers (BEERS menu option in navbar) ------------------
@@ -57,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showBeersByStyle(event) {
     mainPage.innerHTML = ""
+    beerUl.innerHTML = ""
 
       fetch(`http://localhost:3000/api/v1/beers`)
         .then(res => res.json())
@@ -102,35 +110,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
 
-          if (event.target.id === "MALT") {
-            if (beer.description.includes("malt") || beer.description.includes("malt")) {
-              let maltLi = document.createElement("li")
-              maltLi.innerText = beer.name + " (" + beer.style + ")"
-              maltLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(maltLi)
+          if (event.target.id === "HEFEWEIZEN") {
+            if (beer.style.includes("Hefeweizen") || beer.description.includes("hefeweizen")) {
+              let hefeweizenLi = document.createElement("li")
+              hefeweizenLi.innerText = beer.name + " (" + beer.style + ")"
+              hefeweizenLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(hefeweizenLi)
               mainPage.append(beerUl)
             }
           }
 
-          if (event.target.id === "FLAVORED") {
-            if (beer.description.includes("flavor") || beer.description.includes("flavored")) {
-              let porterLi = document.createElement("li")
-              porterLi.innerText = beer.name + " (" + beer.style + ")"
-              beerUl.append(porterLi)
+          if (event.target.id === "FRUIT") {
+            if (beer.name.includes("Fruit") || beer.description.includes("fruit")) {
+              let fruitLi = document.createElement("li")
+              fruitLi.innerText = beer.name + " (" + beer.style + ")"
+              fruitLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(fruitLi)
               mainPage.append(beerUl)
             }
           }
 
-          // styles.forEach(style => {
-          //   if (event.target.id === style) {
-          //     if (beer.description.includes(style)) {
-          //       let li = document.createElement("li")
-          //       li.innerText = beer.name + " (" + beer.style + ")"
-          //       mainPage.append(li)
-          //     }
-          //   }
-          // })
-
+          if (event.target.id === "PILSNER") {
+            if (beer.style.includes("Pilsner") || beer.description.includes("pilsner")) {
+              let pilsnerLi = document.createElement("li")
+              pilsnerLi.innerText = beer.name + " (" + beer.style + ")"
+              pilsnerLi.setAttribute("data-id", `${beer.id}`)
+              beerUl.append(pilsnerLi)
+              mainPage.append(beerUl)
+            }
+          }
         }))
   }
 

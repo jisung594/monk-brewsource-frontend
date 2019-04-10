@@ -1,3 +1,7 @@
+#site-content {
+  height: 100%;
+}
+
 .wrapper {
   display: grid;
   /* grid-template-columns: 20% 80%; */
@@ -9,6 +13,7 @@
   display: grid;
   grid-template-columns: 60% 40%;
   background-color: black;
+  position: sticky;
 }
 
 .sidebar {
@@ -25,6 +30,7 @@
   position: relative;
 }
 
+
 #style-list {
   list-style-type: none;
   padding: 10px;
@@ -34,15 +40,15 @@
   font-size: 60px;
 }
 
-#monk-logo {
-  width: 40%;
-  height: 40%;
+.logo-container {
   z-index: 200;
   position: absolute;
-  top: 50px;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+#monk-logo {
+  position: sticky;
+  width: 40%;
+  height: 40%;
 }
 
 #monk-by-the-sea {

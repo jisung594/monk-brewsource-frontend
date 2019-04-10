@@ -37,20 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
   menu.addEventListener("click", menuOption)
 
 
-
   function menuOption(event) {
     mainPage.innerHTML = ""
+    styleUl.innerHTML = ""
 
     // Show Beer Index
     if (event.target.id === "option-1") {
-      // fetch("http://localhost:3000/api/v1/beers")
-      //   .then(res => res.json())
-      //   .then(beers => beers.forEach(beer => {
-      //     beerUl.innerHTML += `<li class="beer-name" data-id="${beer.id}">${beer.name}</li>`
-      //   }))
-        // mainPage.append(beerUl)
-
-
       styles.forEach(style => {
         let li = document.createElement('li')
         li.innerText = style
@@ -71,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(beers => beers.forEach(beer => {
 
           if (event.target.id === "ALE") {
-            if (beer.name.includes("Ale")) {
+            if (beer.name.includes("Ale") || beer.description.includes("ale")) {
               let aleLi = document.createElement("li")
               aleLi.innerText = beer.name + " (" + beer.style + ")"
               aleLi.setAttribute("data-id", `${beer.id}`)
@@ -81,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           if (event.target.id === "LAGER") {
-            if (beer.name.includes("Lager")) {
+            if (beer.name.includes("Lager") || beer.description.includes("lager")) {
               let lagerLi = document.createElement("li")
               lagerLi.innerText = beer.name + " (" + beer.style + ")"
               lagerLi.setAttribute("data-id", `${beer.id}`)
@@ -91,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           if (event.target.id === "STOUT") {
-            if (beer.name.includes("Stout")) {
+            if (beer.name.includes("Stout") || beer.description.includes("stout")) {
               let stoutLi = document.createElement("li")
               stoutLi.innerText = beer.name + " (" + beer.style + ")"
               stoutLi.setAttribute("data-id", `${beer.id}`)
@@ -101,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           if (event.target.id === "PORTER") {
-            if (beer.name.includes("Porter")) {
+            if (beer.name.includes("Porter") || beer.description.includes("porter")) {
               let porterLi = document.createElement("li")
               porterLi.innerText = beer.name + " (" + beer.style + ")"
               porterLi.setAttribute("data-id", `${beer.id}`)
@@ -111,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           if (event.target.id === "MALT") {
-            if (beer.description.includes("malt")) {
+            if (beer.description.includes("malt") || beer.description.includes("malt")) {
               let maltLi = document.createElement("li")
               maltLi.innerText = beer.name + " (" + beer.style + ")"
               maltLi.setAttribute("data-id", `${beer.id}`)
@@ -121,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
 
           if (event.target.id === "FLAVORED") {
-            if (beer.description.includes("flavor")) {
+            if (beer.description.includes("flavor") || beer.description.includes("flavored")) {
               let porterLi = document.createElement("li")
               porterLi.innerText = beer.name + " (" + beer.style + ")"
               beerUl.append(porterLi)
@@ -151,18 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
   beerUl.addEventListener("click", showBeerDetailPage)
 
   function showBeerDetailPage(event) {
-    mainPage.innerHTML = ""
     const beerId = event.target.dataset.id
+    mainPage.innerHTML = ""
 
     fetch(`http://localhost:3000/api/v1/beers/${beerId}`)
       .then(res => res.json())
       .then(beer => {
         mainPage.innerHTML = `
-        <div data-id="${beer.id}">
+        <div class="beer-div" data-id="${beer.id}">
         <h1>${beer.name}</h1>
         <img src="${beer.image}">
         <h4>Style: ${beer.style}</h4>
         <p>${beer.description}</p>
+          <div id="review-list">
+            <label>Reviews:</label>
+          </div>
         <button type="button" name="button" id="add-review-btn">Review Your Beer</button>
         </div>
         `
@@ -215,11 +210,18 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
       .then(res => res.json())
-      .then(review => displayNewReview)
+      .then(review => {
+        // let reviewList = event.target.previousElementSibling.querySelector("#review-list")
+        mainPage += `<div>
+        <h3>${review.title}</h3>
+        <h5>${review.rating}</h5>
+        <p>${review.content}</p>
+        </div>`
+      })
   }
 
-  // function displayNewReview() {
-  //
+  // function displayNewReview(review) {
+  //   mainPage.append(review.title)
   // }
 
 

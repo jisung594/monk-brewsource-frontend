@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // VARIABLES
   let styles = [
+    "IPA",
     "ALE",
     "LAGER",
     "PILSNER",
@@ -10,9 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     "HEFEWEIZEN",
     "FRUIT"
   ]
-  let styleUl = document.querySelector('#style-list')
+  let countries = [
+    "UNITED STATES",
+    "GERMANY",
+    "JAPAN"
+  ]
+  let categoryUl = document.querySelector('#category-list')
+  let countryUl = document.querySelector('#country-list')
   let featuredUl = document.querySelector('#featured-list')
-  let beerUl = document.querySelector('#beer-list')
+  let itemUl = document.querySelector('#item-list')
   const bgImage = document.querySelector('#monk-by-the-sea')
   let mainPage = document.querySelector('.main-page')
   const sidebar = document.querySelector(".sidebar")
@@ -20,33 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // const beerURL = "http://api.brewerydb.com/v2/beers/?key=afe69a87d4126239031c4abba79cd743"
 
 
-  // Get SIDEBAR on DOM --------------------------------------------------------
-  sidebarList();
-  function sidebarList() {
-    fetch("http://localhost:3000/api/v1/beers")
-      .then(res => res.json())
-      .then(beers => {
-        featuredUl.innerHTML = `
-        <li>${beers[3]["name"]}</li>
-        <li>${beers[5]["name"]}</li>
-        <li>${beers[1]["name"]}</li>
-        <li>${beers[7]["name"]}</li>
-        <li>${beers[14]["name"]}</li>
-        <li>${beers[6]["name"]}</li>
-        <li>${beers[10]["name"]}</li>
-        <li>${beers[32]["name"]}</li>
-        `
-      })
-  }
 
 // Shows Complete List of Beers (BEERS menu option in navbar) ------------------
   const menu = document.querySelector(".menu")
   menu.addEventListener("click", menuOption)
 
-
   function menuOption(event) {
     mainPage.innerHTML = ""
-    styleUl.innerHTML = ""
+    categoryUl.innerHTML = ""
+    countryUl.innerHTML = ""
 
     // Show Beer Index
     if (event.target.id === "option-1") {
@@ -54,101 +43,160 @@ document.addEventListener('DOMContentLoaded', () => {
         let li = document.createElement('li')
         li.innerText = style
         li.setAttribute("id", `${li.innerText}`)
-        styleUl.append(li)
-        mainPage.append(styleUl)
+        categoryUl.append(li)
+        mainPage.append(categoryUl)
+      })
+    }
+
+    // Show Brewery Index
+    if (event.target.id === "option-2") {
+      countries.forEach(country => {
+        let li = document.createElement('li')
+        li.innerText = country
+        li.setAttribute("id", `${li.innerText}`)
+        countryUl.append(li)
+        mainPage.append(countryUl)
       })
     }
   }
 
-  styleUl.addEventListener("click", showBeersByStyle)
+
+  categoryUl.addEventListener("click", showBeersByStyle)
 
   function showBeersByStyle(event) {
     mainPage.innerHTML = ""
-    beerUl.innerHTML = ""
+    itemUl.innerHTML = ""
 
-      fetch(`http://localhost:3000/api/v1/beers`)
+      fetch('http://localhost:3000/api/v1/beers')
         .then(res => res.json())
         .then(beers => beers.forEach(beer => {
+          if (event.target.id === "IPA") {
+            if (beer.style.includes("IPA") || beer.description.includes("IPA")) {
+              let ipaLi = document.createElement("li")
+              ipaLi.innerText = beer.name + ` (${beer.brewery})`
+              ipaLi.setAttribute("data-id", `${beer.id}`)
+              itemUl.append(ipaLi)
+              mainPage.append(itemUl)
+            }
+          }
 
           if (event.target.id === "ALE") {
             if (beer.name.includes("Ale") || beer.description.includes("ale")) {
               let aleLi = document.createElement("li")
-              aleLi.innerText = beer.name + " (" + beer.style + ")"
+              aleLi.innerText = beer.name + ` (${beer.brewery})`
               aleLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(aleLi)
-              mainPage.append(beerUl)
+              itemUl.append(aleLi)
+              mainPage.append(itemUl)
             }
           }
 
           if (event.target.id === "LAGER") {
             if (beer.name.includes("Lager") || beer.description.includes("lager")) {
               let lagerLi = document.createElement("li")
-              lagerLi.innerText = beer.name + " (" + beer.style + ")"
+              lagerLi.innerText = beer.name + ` (${beer.brewery})`
               lagerLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(lagerLi)
-              mainPage.append(beerUl)
+              itemUl.append(lagerLi)
+              mainPage.append(itemUl)
             }
           }
 
           if (event.target.id === "STOUT") {
             if (beer.name.includes("Stout") || beer.description.includes("stout")) {
               let stoutLi = document.createElement("li")
-              stoutLi.innerText = beer.name + " (" + beer.style + ")"
+              stoutLi.innerText = beer.name + ` (${beer.brewery})`
               stoutLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(stoutLi)
-              mainPage.append(beerUl)
+              itemUl.append(stoutLi)
+              mainPage.append(itemUl)
             }
           }
 
           if (event.target.id === "PORTER") {
             if (beer.name.includes("Porter") || beer.description.includes("porter")) {
               let porterLi = document.createElement("li")
-              porterLi.innerText = beer.name + " (" + beer.style + ")"
+              porterLi.innerText = beer.name + ` (${beer.brewery})`
               porterLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(porterLi)
-              mainPage.append(beerUl)
+              itemUl.append(porterLi)
+              mainPage.append(itemUl)
             }
           }
 
           if (event.target.id === "HEFEWEIZEN") {
             if (beer.style.includes("Hefeweizen") || beer.description.includes("hefeweizen")) {
               let hefeweizenLi = document.createElement("li")
-              hefeweizenLi.innerText = beer.name + " (" + beer.style + ")"
+              hefeweizenLi.innerText = beer.name + ` (${beer.brewery})`
               hefeweizenLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(hefeweizenLi)
-              mainPage.append(beerUl)
+              itemUl.append(hefeweizenLi)
+              mainPage.append(itemUl)
             }
           }
 
           if (event.target.id === "FRUIT") {
             if (beer.name.includes("Fruit") || beer.description.includes("fruit")) {
               let fruitLi = document.createElement("li")
-              fruitLi.innerText = beer.name + " (" + beer.style + ")"
+              fruitLi.innerText = beer.name + ` (${beer.brewery})`
               fruitLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(fruitLi)
-              mainPage.append(beerUl)
+              itemUl.append(fruitLi)
+              mainPage.append(itemUl)
             }
           }
 
           if (event.target.id === "PILSNER") {
             if (beer.style.includes("Pilsner") || beer.description.includes("pilsner")) {
               let pilsnerLi = document.createElement("li")
-              pilsnerLi.innerText = beer.name + " (" + beer.style + ")"
+              pilsnerLi.innerText = beer.name + ` (${beer.brewery})`
               pilsnerLi.setAttribute("data-id", `${beer.id}`)
-              beerUl.append(pilsnerLi)
-              mainPage.append(beerUl)
+              itemUl.append(pilsnerLi)
+              mainPage.append(itemUl)
             }
           }
         }))
   }
 
 
+  countryUl.addEventListener("click", showBreweryByCountry)
 
+  function showBreweryByCountry(event) {
+    mainPage.innerHTML = ""
+    itemUl.innerHTML = ""
 
+    fetch("http://localhost:3000/api/v1/breweries")
+      .then(res => res.json())
+      .then(breweries => breweries.forEach(brewery => {
+        if (event.target.id === "UNITED STATES") {
+          if (brewery.country === "United States") {
+            let breweryLi = document.createElement("li")
+            breweryLi.innerText = brewery.name
+            breweryLi.setAttribute("data-id", `${brewery.id}`)
+            itemUl.append(breweryLi)
+            mainPage.append(itemUl)
+          }
+        }
+
+        if (event.target.id === "GERMANY") {
+          if (brewery.country === "Germany") {
+            let breweryLi = document.createElement("li")
+            breweryLi.innerText = brewery.name
+            breweryLi.setAttribute("data-id", `${brewery.id}`)
+            itemUl.append(breweryLi)
+            mainPage.append(itemUl)
+          }
+        }
+
+        if (event.target.id === "JAPAN") {
+          if (brewery.country === "Japan") {
+            let breweryLi = document.createElement("li")
+            breweryLi.innerText = brewery.name
+            breweryLi.setAttribute("data-id", `${brewery.id}`)
+            itemUl.append(breweryLi)
+            mainPage.append(itemUl)
+          }
+        }
+      }))
+  }
 
 
 // Shows Detail Page of Specific Beer ------------------------------------------
-  beerUl.addEventListener("click", showBeerDetailPage)
+  itemUl.addEventListener("click", showBeerDetailPage)
 
   function showBeerDetailPage(event) {
     const beerId = event.target.dataset.id
@@ -231,9 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // function displayNewReview(review) {
   //   mainPage.append(review.title)
   // }
-
-
-
 
 
 

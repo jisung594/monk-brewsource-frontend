@@ -1,5 +1,5 @@
-## Project title
-MONK BREWSOURCE - Beer review web application with complete inventory of beers around the world.
+# MONK BREWSOURCE
+Beer review web application with complete inventory of beers around the world.
 
 ## Motivation
 A tribute to leading beer review platforms, such as BeerAdvocate and Untapped. Such web applications offer an extensive list 

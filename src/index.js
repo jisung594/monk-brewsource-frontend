@@ -16,10 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
     "GERMANY",
     "JAPAN"
   ]
-  let categoryUl = document.querySelector('#category-list')
+  let styleUl = document.querySelector('#style-list')
   let countryUl = document.querySelector('#country-list')
   let featuredUl = document.querySelector('#featured-list')
-  let itemUl = document.querySelector('#item-list')
+  let beerUl = document.querySelector('#beer-list')
+  let breweryUl = document.querySelector('#brewery-list')
   const bgImage = document.querySelector('#monk-by-the-sea')
   let mainPage = document.querySelector('.main-page')
   const sidebar = document.querySelector(".sidebar")
@@ -34,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function menuOption(event) {
     mainPage.innerHTML = ""
-    categoryUl.innerHTML = ""
+    styleUl.innerHTML = ""
     countryUl.innerHTML = ""
 
     // Show Beer Index
@@ -43,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let li = document.createElement('li')
         li.innerText = style
         li.setAttribute("id", `${li.innerText}`)
-        categoryUl.append(li)
-        mainPage.append(categoryUl)
+        styleUl.append(li)
+        mainPage.append(styleUl)
       })
     }
 
@@ -61,11 +62,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  categoryUl.addEventListener("click", showBeersByStyle)
+  styleUl.addEventListener("click", showBeersByStyle)
 
   function showBeersByStyle(event) {
     mainPage.innerHTML = ""
-    itemUl.innerHTML = ""
+    beerUl.innerHTML = ""
 
     fetch('http://localhost:3000/api/v1/beers')
       .then(res => res.json())
@@ -75,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
           let beerLi = document.createElement("li")
           beerLi.innerText = beer.name + ` (${beer.brewery})`
           beerLi.setAttribute("data-id", `${beer.id}`)
-          itemUl.append(beerLi)
-          mainPage.append(itemUl)
+          beerUl.append(beerLi)
+          mainPage.append(beerUl)
         }
       }))
   }
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showBreweryByCountry(event) {
     mainPage.innerHTML = ""
-    itemUl.innerHTML = ""
+    breweryUl.innerHTML = ""
 
     fetch("http://localhost:3000/api/v1/breweries")
       .then(res => res.json())
@@ -100,15 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
           let breweryLi = document.createElement("li")
           breweryLi.innerText = brewery.name
           breweryLi.setAttribute("data-id", `${brewery.id}`)
-          itemUl.append(breweryLi)
-          mainPage.append(itemUl)
+          breweryUl.append(breweryLi)
+          mainPage.append(breweryUl)
         }
       }))
   }
 
 
 // Shows Detail Page of Specific Beer ------------------------------------------
-  itemUl.addEventListener("click", showBeerDetailPage)
+  beerUl.addEventListener("click", showBeerDetailPage)
 
   function showBeerDetailPage(event) {
     const beerId = event.target.dataset.id
@@ -135,8 +136,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
 
-  // Show Form to Add Review ("Review Your Beer" button) -------------------------
 
+  // Shows Detail Page of Specific Brewery
+  breweryUl.addEventListener("click", showBreweryDetailPage)
+
+  function showBreweryDetailPage(event) {
+    let breweryId = event.target.dataset.id
+    mainPage.innerHTML = ""
+
+    fetch(`http://localhost:3000/api/v1/breweries/${breweryId}`)
+      .then(res => res.json())
+      .then(brewery => {
+        mainPage.innerHTML = `
+          <div>
+            <h1>${brewery.name}</h1>
+            <img src="${brewery.image}">
+            <h4>${brewery.city}, ${brewery.state}</h4>
+            <p>${brewery.country}</p>
+            <p>Beer Count: ${brewery.beer_count}</p>
+          </div>
+        `
+      })
+  }
+
+
+  // Show Form to Add Review ("Review Your Beer" button) -------------------------
   function showReviewFormOnDom(event) {
     // mainPage.innerHTML = ""
 

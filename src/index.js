@@ -67,89 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
     mainPage.innerHTML = ""
     itemUl.innerHTML = ""
 
-      fetch('http://localhost:3000/api/v1/beers')
-        .then(res => res.json())
-        .then(beers => beers.forEach(beer => {
-          if (event.target.id === "IPA") {
-            if (beer.style.includes("IPA") || beer.description.includes("IPA")) {
-              let ipaLi = document.createElement("li")
-              ipaLi.innerText = beer.name + ` (${beer.brewery})`
-              ipaLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(ipaLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "ALE") {
-            if (beer.name.includes("Ale") || beer.description.includes("ale")) {
-              let aleLi = document.createElement("li")
-              aleLi.innerText = beer.name + ` (${beer.brewery})`
-              aleLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(aleLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "LAGER") {
-            if (beer.name.includes("Lager") || beer.description.includes("lager")) {
-              let lagerLi = document.createElement("li")
-              lagerLi.innerText = beer.name + ` (${beer.brewery})`
-              lagerLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(lagerLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "STOUT") {
-            if (beer.name.includes("Stout") || beer.description.includes("stout")) {
-              let stoutLi = document.createElement("li")
-              stoutLi.innerText = beer.name + ` (${beer.brewery})`
-              stoutLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(stoutLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "PORTER") {
-            if (beer.name.includes("Porter") || beer.description.includes("porter")) {
-              let porterLi = document.createElement("li")
-              porterLi.innerText = beer.name + ` (${beer.brewery})`
-              porterLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(porterLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "HEFEWEIZEN") {
-            if (beer.style.includes("Hefeweizen") || beer.description.includes("hefeweizen")) {
-              let hefeweizenLi = document.createElement("li")
-              hefeweizenLi.innerText = beer.name + ` (${beer.brewery})`
-              hefeweizenLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(hefeweizenLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "FRUIT") {
-            if (beer.name.includes("Fruit") || beer.description.includes("fruit")) {
-              let fruitLi = document.createElement("li")
-              fruitLi.innerText = beer.name + ` (${beer.brewery})`
-              fruitLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(fruitLi)
-              mainPage.append(itemUl)
-            }
-          }
-
-          if (event.target.id === "PILSNER") {
-            if (beer.style.includes("Pilsner") || beer.description.includes("pilsner")) {
-              let pilsnerLi = document.createElement("li")
-              pilsnerLi.innerText = beer.name + ` (${beer.brewery})`
-              pilsnerLi.setAttribute("data-id", `${beer.id}`)
-              itemUl.append(pilsnerLi)
-              mainPage.append(itemUl)
-            }
-          }
-        }))
+    fetch('http://localhost:3000/api/v1/beers')
+      .then(res => res.json())
+      .then(beers => beers.forEach(beer => {
+        if (beer.style.toLowerCase().includes(event.target.id.toLowerCase()) ||
+        beer.description.toLowerCase().includes(event.target.id.toLowerCase())) {
+          let beerLi = document.createElement("li")
+          beerLi.innerText = beer.name + ` (${beer.brewery})`
+          beerLi.setAttribute("data-id", `${beer.id}`)
+          itemUl.append(beerLi)
+          mainPage.append(itemUl)
+        }
+      }))
   }
 
 
@@ -174,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
           itemUl.append(breweryLi)
           mainPage.append(itemUl)
         }
-
       }))
   }
 

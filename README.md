@@ -1,4 +1,4 @@
-## MONK BREWSOURCE
+# MONK BREWSOURCE
 Beer review web application with complete inventory of beers around the world.
 
 ## Motivation

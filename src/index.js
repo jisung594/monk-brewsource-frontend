@@ -162,35 +162,19 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch("http://localhost:3000/api/v1/breweries")
       .then(res => res.json())
       .then(breweries => breweries.forEach(brewery => {
-        if (event.target.id === "UNITED STATES") {
-          if (brewery.country === "United States") {
-            let breweryLi = document.createElement("li")
-            breweryLi.innerText = brewery.name
-            breweryLi.setAttribute("data-id", `${brewery.id}`)
-            itemUl.append(breweryLi)
-            mainPage.append(itemUl)
-          }
+        let newArr = event.target.id.split(" ")
+        let selected_country = newArr.map(str => {
+          return str[0].toUpperCase() + str.slice(1).toLowerCase()
+        }).join(" ")
+
+        if (brewery.country === selected_country) {
+          let breweryLi = document.createElement("li")
+          breweryLi.innerText = brewery.name
+          breweryLi.setAttribute("data-id", `${brewery.id}`)
+          itemUl.append(breweryLi)
+          mainPage.append(itemUl)
         }
 
-        if (event.target.id === "GERMANY") {
-          if (brewery.country === "Germany") {
-            let breweryLi = document.createElement("li")
-            breweryLi.innerText = brewery.name
-            breweryLi.setAttribute("data-id", `${brewery.id}`)
-            itemUl.append(breweryLi)
-            mainPage.append(itemUl)
-          }
-        }
-
-        if (event.target.id === "JAPAN") {
-          if (brewery.country === "Japan") {
-            let breweryLi = document.createElement("li")
-            breweryLi.innerText = brewery.name
-            breweryLi.setAttribute("data-id", `${brewery.id}`)
-            itemUl.append(breweryLi)
-            mainPage.append(itemUl)
-          }
-        }
       }))
   }
 

@@ -121,7 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
         mainPage.innerHTML = `
         <div class="beer-div" data-id="${beer.id}">
         <h1>${beer.name}</h1>
-        <img src="${beer.image}">
+        <h4>${beer.brewery}</h4>
+        <img class="beer-img" src="${beer.image}">
         <h4>Style: ${beer.style}</h4>
         <p>${beer.description}</p>
           <div id="review-list">
@@ -148,9 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(brewery => {
         mainPage.innerHTML = `
-          <div>
+          <div class="brewery-div">
             <h1>${brewery.name}</h1>
-            <img src="${brewery.image}">
+            <img class="brewery-img" src="${brewery.image}">
             <h4>${brewery.city}, ${brewery.state}</h4>
             <p>${brewery.country}</p>
             <p>Beer Count: ${brewery.beer_count}</p>
@@ -173,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </form>`
 
     let addReviewForm = document.querySelector("#add-review-form")
-    addReviewForm.addEventListener("submit", createReview)
+    mainPage.addEventListener("submit", createReview)
   }
 
   // add event listener on mainPage (event.target should be submit button)
@@ -185,37 +186,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let titleField = event.target.title.value
     let contentField = event.target.content.value
     let ratingField = event.target.rating.value
-    // let beerField = event.target.beer.value
     let beerId = event.target.previousElementSibling.dataset.id
 
     fetch("http://localhost:3000/api/v1/reviews", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Accepts": "application/json"
       },
       body: JSON.stringify({
         title: titleField,
         content: contentField,
-        rating: ratingField,
-        beer_id: beerId,
-        user_id: 1
+        rating: parseInt(ratingField),
+        beer_id: parseInt(beerId),
+        user_id: 2
       })
     })
       .then(res => res.json())
       .then(review => {
+        console.log(review);
         // let reviewList = event.target.previousElementSibling.querySelector("#review-list")
-        mainPage += `<div>
+        mainPage.innerHTML += `<div>
         <h3>${review.title}</h3>
         <h5>${review.rating}</h5>
         <p>${review.content}</p>
         </div>`
       })
-  }
-
-  // function displayNewReview(review) {
-  //   mainPage.append(review.title)
-  // }
-
-
+  // STILL NEEDS TO LIST OUT ALL EXISTING REVIEWS FOR EACH BEER
 
 })

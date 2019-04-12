@@ -143,11 +143,15 @@ li.beer-name {
   padding: 10px;
 }
 
-
 input {
   width: 80%;
 }
 
-.beer-div {
+.beer-div, .brewery-div {
   padding: 30px;
+}
+
+.beer-img, .brewery-img {
+  /* image-resolution: 300dpi; */
+  width: 300px;
 }

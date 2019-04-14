@@ -31,13 +31,13 @@
 }
 
 
-#category-list {
+#style-list, #country-list {
   list-style-type: none;
   padding: 10px;
   font-family: brother-1816, sans-serif;
   font-style: normal;
-  font-weight: 20px;
-  font-size: 60px;
+  font-size: 30px;
+  font-weight: 600;
 }
 
 .logo-container {
@@ -130,13 +130,12 @@
   padding-left: 20px;
 }
 
-#beer-list {
+#beer-list, #brewery-list {
   list-style-type: none;
-}
-
-#featured-list {
-  list-style-type: none;
-  padding: 20px;
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 li.beer-name {

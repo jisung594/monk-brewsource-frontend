@@ -59,6 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
         mainPage.append(countryUl)
       })
     }
+
+    if (event.target.id === "option-3") {
+      mainPage.innerHTML += `<div>
+      <img src="assets/monk_logo_physical 2.png" alt="logo" id="monk-logo"/>
+      <p>A tribute to leading beer review platforms, such as BeerAdvocate and Untapped. Such web applications offer an extensive list of beers from all over the world, constantly updated whenever a new brew or brewery pops up on the market. Monk Brewsource is an online community space for enthusiasts and hobbyists alike.</p>
+      </div>`
+    }
   }
 
 
@@ -126,8 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <h4>Style: ${beer.style}</h4>
           <p>${beer.description}</p>
           <button type="button" name="button" id="add-review-btn">Review Your Beer</button>
-          <br/>
-          <label>Reviews:</label>
+          <h5>Reviews:</h5>
           <div id='review-list'>
           </div>
         </div>

@@ -118,67 +118,60 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`http://localhost:3000/api/v1/beers/${beerId}`)
       .then(res => res.json())
       .then(beer => {
-        mainPage.innerHTML = `
+        mainPage.innerHTML += `
         <div class="beer-div" data-id="${beer.id}">
-        <h1>${beer.name}</h1>
-        <h4>${beer.brewery}</h4>
-        <img class="beer-img" src="${beer.image}">
-        <h4>Style: ${beer.style}</h4>
-        <p>${beer.description}</p>
-          <div id="review-list">
-            <label>Reviews:</label>
+          <h1>${beer.name}</h1>
+          <h4>${beer.brewery}</h4>
+          <img class="beer-img" src="${beer.image}">
+          <h4>Style: ${beer.style}</h4>
+          <p>${beer.description}</p>
+          <button type="button" name="button" id="add-review-btn">Review Your Beer</button>
+          <br/>
+          <label>Reviews:</label>
+          <div id='review-list'>
           </div>
-        <button type="button" name="button" id="add-review-btn">Review Your Beer</button>
         </div>
         `
-        const addReviewBtn = document.querySelector("#add-review-btn")
-        addReviewBtn.addEventListener("click", showReviewFormOnDom)
       })
 
+    fetch('http://localhost:3000/api/v1/reviews')
+    .then(res => res.json())
+    .then(reviews => reviews.forEach(reviewObj => {
+      let reviewList = document.querySelector('#review-list')
+      if (reviewList && reviewObj.beer_id === parseInt(beerId)) {
+        reviewList.innerHTML += `<div>
+        <h3>${reviewObj.title}</h3>
+        <h5>${reviewObj.rating}</h5>
+        <p>${reviewObj.content}</p>
+        </div>`
+      }
+    }))
+    // const addReviewBtn = document.querySelector("#add-review-btn")
+    // addReviewBtn.addEventListener("click", showReviewFormOnDom)
   }
 
 
-  // Shows Detail Page of Specific Brewery
-  breweryUl.addEventListener("click", showBreweryDetailPage)
-
-  function showBreweryDetailPage(event) {
-    let breweryId = event.target.dataset.id
-    mainPage.innerHTML = ""
-
-    fetch(`http://localhost:3000/api/v1/breweries/${breweryId}`)
-      .then(res => res.json())
-      .then(brewery => {
-        mainPage.innerHTML = `
-          <div class="brewery-div">
-            <h1>${brewery.name}</h1>
-            <img class="brewery-img" src="${brewery.image}">
-            <h4>${brewery.city}, ${brewery.state}</h4>
-            <p>${brewery.country}</p>
-            <p>Beer Count: ${brewery.beer_count}</p>
-          </div>
-        `
-      })
-  }
-
+  mainPage.addEventListener('click', showReviewFormOnDom)
 
   // Show Form to Add Review ("Review Your Beer" button) -------------------------
   function showReviewFormOnDom(event) {
     // mainPage.innerHTML = ""
+    if (event.target.id === 'add-review-btn') {
+      let reviewBtn = document.querySelector('#add-review-btn')
+      reviewBtn.remove()
 
-    mainPage.innerHTML += `<form id="add-review-form" action="index.html" method="post">
-      Title: <input type="text" name="title" value=""><br>
-      Content: <input type="text" name="content" value=""><br>
-      Rating: <input type="number" min="0" name="rating" value=""><br>
-      <!-- Beer: <input type="text" name="beer" value=""><br> -->
-      <button type="submit" name="button">Submit Review</button>
-    </form>`
+      mainPage.innerHTML += `<form id="add-review-form" action="index.html" method="post">
+        Title: <input id="title" type="text" name="title" value=""><br>
+        Content: <input id="content" type="text" name="content" value=""><br>
+        Rating: <input id="rating" type="number" min="0" name="rating" value=""><br>
+        <!-- Beer: <input type="text" name="beer" value=""><br> -->
+        <button type="submit" name="button">Submit Review</button>
+      </form>`
 
-    let addReviewForm = document.querySelector("#add-review-form")
-    mainPage.addEventListener("submit", createReview)
+      let addReviewForm = document.querySelector("#add-review-form")
+      mainPage.addEventListener("submit", createReview)
+    }
   }
-
-  // add event listener on mainPage (event.target should be submit button)
-  // mainPage.addEventListener("submit", createReview)
 
 
   function createReview(event) {
@@ -187,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let contentField = event.target.content.value
     let ratingField = event.target.rating.value
     let beerId = event.target.previousElementSibling.dataset.id
+    let reviewList = document.querySelector('#review-list')
 
     fetch("http://localhost:3000/api/v1/reviews", {
       method: "POST",
@@ -204,14 +198,38 @@ document.addEventListener('DOMContentLoaded', () => {
     })
       .then(res => res.json())
       .then(review => {
-        console.log(review);
-        // let reviewList = event.target.previousElementSibling.querySelector("#review-list")
-        mainPage.innerHTML += `<div>
+        reviewList.innerHTML += `<div>
         <h3>${review.title}</h3>
         <h5>${review.rating}</h5>
         <p>${review.content}</p>
         </div>`
+
+        document.querySelector('#title').value = ""
+        document.querySelector('#content').value = ""
+        document.querySelector('#rating').value = ""
       })
-  // STILL NEEDS TO LIST OUT ALL EXISTING REVIEWS FOR EACH BEER
+  }
+
+
+  // Shows Detail Page of Specific Brewery
+  breweryUl.addEventListener("click", showBreweryDetailPage)
+
+  function showBreweryDetailPage(event) {
+    let breweryId = event.target.dataset.id
+    mainPage.innerHTML = ""
+
+    fetch(`http://localhost:3000/api/v1/breweries/${breweryId}`)
+      .then(res => res.json())
+      .then(brewery => {
+        mainPage.innerHTML += `<div class="brewery-div">
+          <h1>${brewery.name}</h1>
+          <img class="brewery-img" src="${brewery.image}">
+          <h4>${brewery.city}, ${brewery.state}</h4>
+          <p>${brewery.country}</p>
+          <p>Beer Count: ${brewery.beer_count}</p>
+          </div>
+        `
+      })
+  }
 
 })

@@ -2,14 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // VARIABLES
   let styles = [
-    "IPA",
     "ALE",
     "LAGER",
     "PILSNER",
-    "STOUT",
+    "IPA",
     "PORTER",
-    "HEFEWEIZEN",
-    "FRUIT"
+    "STOUT",
+    "WHEAT",
+    "FRUIT",
+    "HEFEWEIZEN"
   ]
   let countries = [
     "UNITED STATES",
@@ -43,8 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
       styles.forEach(style => {
         let li = document.createElement('li')
         li.innerText = style
-        li.setAttribute("id", `${li.innerText}`)
-        styleUl.append(li)
+        let div = document.createElement('div')
+        div.setAttribute("id", `${li.innerText}`)
+        div.setAttribute("class", "style-div")
+        div.append(li)
+        styleUl.append(div)
         mainPage.append(styleUl)
       })
     }
@@ -53,9 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target.id === "option-2") {
       countries.forEach(country => {
         let li = document.createElement('li')
+        let countryId = country.split("").filter(char => {
+          return char !== " "
+        }).join("").toUpperCase()
+        li.setAttribute("id", countryId)
         li.innerText = country
-        li.setAttribute("id", `${li.innerText}`)
-        countryUl.append(li)
+        let div = document.createElement('div')
+        div.setAttribute("class", "country-div")
+        div.append(li)
+        countryUl.append(div)
         mainPage.append(countryUl)
       })
     }

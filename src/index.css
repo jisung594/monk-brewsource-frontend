@@ -16,51 +16,68 @@
   position: sticky;
 }
 
-.sidebar {
-  display: grid;
-  grid-template-rows: 20% 80%;
-  background-color: black;
-  color: white;
-  height: 100%;
-}
-
 .main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
   max-height: 100%;
   max-width: 100%;
   position: relative;
 }
 
-
 #style-list, #country-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
   list-style-type: none;
-  padding: 10px;
   font-family: brother-1816, sans-serif;
   font-style: normal;
   font-size: 30px;
   font-weight: 600;
+  color: white;
+  padding: 10px;
 }
 
-.logo-container {
-  z-index: 200;
-  position: absolute;
+#ALE {background-color: #EADA24;}
+#LAGER {background-color: #FFC72C;}
+#PILSNER {background-color: #FF9E1B;}
+#IPA {background-color: #D86018;}
+#STOUT {background-color: #452325;}
+#PORTER {background-color: #5E3032;}
+#WHEAT {background-color: #D38235;}
+#FRUIT {background-color: #D23B00;}
+#HEFEWEIZEN {background-color: #E87B00;}
+
+#UNITEDSTATES {background-color: #D86018;}
+#GERMANY {background-color: #EADA24;}
+#JAPAN {background-color: #FFC72C;}
+
+
+.style-div, .country-div {
+  display: flex;
+  padding: 10px;
+  width: 350px;
 }
 
 #monk-logo {
-  position: sticky;
-  width: 40%;
-  height: 40%;
+  width: 60%;
+  position: absolute;
+  margin: auto auto auto auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 200px;
 }
 
 #monk-by-the-sea {
   height: 100%;
   width: 100%;
+  z-index: -200;
   position: absolute;
 }
 
-/* body {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Caspar_David_Friedrich_-_Der_M%C3%B6nch_am_Meer_-_Google_Art_Project.jpg/1200px-Caspar_David_Friedrich_-_Der_M%C3%B6nch_am_Meer_-_Google_Art_Project.jpg");
-  background-repeat: no-repeat;
-} */
 
 .center {
   left: 40px;

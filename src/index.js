@@ -57,8 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
       countries.forEach(country => {
         let countryLi = document.createElement('li')
         countryLi.innerText = country
-        let countryId = country.split("").filter(char => {
-          return char !== " "
+        let countryId = country.split("").map(char => {
+          if (char === " ") {
+            return "_"
+          } else {
+            return char
+          }
         }).join("").toUpperCase()
         let countryDiv = document.createElement('div')
         countryLi.setAttribute("id", countryId)
@@ -84,16 +88,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetch('http://localhost:3000/api/v1/beers')
       .then(res => res.json())
-      .then(beers => beers.forEach(beer => {
-        if (beer.style.toLowerCase().includes(event.target.id.toLowerCase()) ||
-        beer.description.toLowerCase().includes(event.target.id.toLowerCase())) {
-          let beerLi = document.createElement("li")
-          beerLi.innerText = beer.name + ` (${beer.brewery})`
-          beerLi.setAttribute("data-id", `${beer.id}`)
-          beerUl.append(beerLi)
-          mainPage.append(beerUl)
-        }
-      }))
+      .then(beers => {
+        let sortedBeers = beers.sort((b1,b2) => {
+          if (b2.name > b1.name) {
+            return -1
+          } else {
+            return 1
+          }
+        })
+
+        let styleHeader = document.createElement('h2')
+        styleHeader.setAttribute('class', 'index-header')
+        styleHeader.innerText = event.target.id
+        mainPage.append(styleHeader)
+
+        sortedBeers.forEach(beer => {
+          if (beer.style.toLowerCase().includes(event.target.id.toLowerCase()) ||
+          beer.description.toLowerCase().includes(event.target.id.toLowerCase())) {
+            let beerLi = document.createElement("li")
+            beerLi.innerText = beer.name + ` (${beer.brewery})`
+            beerLi.setAttribute("data-id", `${beer.id}`)
+            beerUl.append(beerLi)
+            mainPage.append(beerUl)
+          }
+        })
+    })
   }
 
 
@@ -105,20 +124,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetch("http://localhost:3000/api/v1/breweries")
       .then(res => res.json())
-      .then(breweries => breweries.forEach(brewery => {
-        let newArr = event.target.id.split(" ")
-        let selected_country = newArr.map(str => {
-          return str[0].toUpperCase() + str.slice(1).toLowerCase()
-        }).join(" ")
+      .then(breweries => {
+        let sortedBreweries = breweries.sort((b1,b2) => {
+          if (b2.name > b1.name) {
+            return -1
+          } else {
+            return 1
+          }
+        })
 
-        if (brewery.country === selected_country) {
-          let breweryLi = document.createElement("li")
-          breweryLi.innerText = brewery.name
-          breweryLi.setAttribute("data-id", `${brewery.id}`)
-          breweryUl.append(breweryLi)
-          mainPage.append(breweryUl)
-        }
-      }))
+        let countryHeader = document.createElement('h2')
+        countryHeader.setAttribute('class', 'index-header')
+        let newStr = event.target.id.split("_").join(" ")
+        countryHeader.innerText = newStr
+        mainPage.append(countryHeader)
+
+        sortedBreweries.forEach(brewery => {
+          let breweryCountry = brewery.country.split("").map(char => {
+            if (char === " ") {
+              return "_"
+            } else {
+              return char
+            }
+          }).join("")
+
+          if (breweryCountry.toUpperCase() === event.target.id.toUpperCase()) {
+            let breweryLi = document.createElement("li")
+            breweryLi.innerText = brewery.name
+            breweryLi.setAttribute("data-id", `${brewery.id}`)
+            breweryUl.append(breweryLi)
+            mainPage.append(breweryUl)
+          }
+        })
+      })
   }
 
 

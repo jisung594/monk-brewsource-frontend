@@ -1,6 +1,6 @@
-#site-content {
+/* #site-content {
   height: 100%;
-}
+} */
 
 .wrapper {
   display: grid;
@@ -19,7 +19,7 @@
 .main-page {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  /* align-items: center; */
 
   max-height: 100%;
   max-width: 100%;
@@ -28,8 +28,10 @@
 
 #style-list, #country-list {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
+  align-self: center;
+  width: 80%;
 
   list-style-type: none;
   font-family: brother-1816, sans-serif;
@@ -37,7 +39,23 @@
   font-size: 30px;
   font-weight: 600;
   color: white;
+  padding-top: 80px;
+}
+
+#style-list li {
+  display: flex;
+  width: 250px;
   padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+#country-list li {
+  display: flex;
+  width: 270px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 #ALE {background-color: #EADA24;}
@@ -55,20 +73,28 @@
 #JAPAN {background-color: #FFC72C;}
 
 
-.style-div, .country-div {
-  display: flex;
-  padding: 10px;
-  width: 350px;
-}
-
 #monk-logo {
-  width: 60%;
+  display: flex;
   position: absolute;
+  width: 60%;
   margin: auto auto auto auto;
   left: 0;
   right: 0;
   top: 0;
   bottom: 200px;
+  /* align-self: center; */
+}
+
+#monk-logo-full {
+  /* height: 100%; */
+  width: 100%;
+  opacity: 1.0;
+  position: relative;
+  object-fit: contain;
+}
+
+#monk-logo-full:hover {
+opacity: 0.3;
 }
 
 #monk-by-the-sea {
@@ -78,65 +104,66 @@
   position: absolute;
 }
 
+#philosophy {
+  display: flex;
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  width: 65%;
+  margin: 250px auto auto auto;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  position: absolute;
+  background-color: black;
+  padding: 10px 40px 10px 40px;
+  color: white;
+  border-radius: 5px;
+}
+
 
 .center {
-  left: 40px;
   margin: auto;
+  padding-left: 30px;
 
   font-family: brother-1816, sans-serif;
   font-style: normal;
-  font-weight: 900;
-  font-size: 40px;
+  font-weight: 600;
+  font-size: 22px;
   color: white;
 }
 
 
 .menu {
   display: inline;
-
   position: absolute;
-  left: 0;
-  top: 32%;
   padding-right: 30px;
-  width: 100%;
+  right: 0;
+  top: 32%;
+  /* width: 100%; */
   text-align: right;
   color: white;
+
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
 }
 
 #option-1 {
   display: inline;
   padding: 10px;
-
-  /* position: absolute;
-  left: 0;
-  top: 25%;
-  padding-right: 270px;
-  width: 100%;
-  text-align: right; */
 }
 
 #option-2 {
   display: inline;
   padding: 10px;
-
-  /* position: absolute;
-  left: 0;
-  top: 25%;
-  padding-right: 150px;
-  width: 100%;
-  text-align: right; */
 }
 
 #option-3 {
   display: inline;
-  /* padding: 10px; */
-
-  /* position: absolute;
-  left: 0;
-  top: 25%;
-  padding-right: 30px;
-  width: 100%;
-  text-align: right; */
+  padding: 10px;
 }
 
 .headers {
@@ -164,10 +191,44 @@ input {
 }
 
 .beer-div, .brewery-div {
+  display: flex;
   padding: 30px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.beer-div h1 {
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.brewery-div h1 {
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+.beer-div p {
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 300;
+  width: 60%;
+}
+
+.brewery-div p {
+  font-family: brother-1816, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 300;
+  width: 60%;
 }
 
 .beer-img, .brewery-img {
   /* image-resolution: 300dpi; */
-  width: 300px;
+  width: 25%;
+  padding: 20px;
 }

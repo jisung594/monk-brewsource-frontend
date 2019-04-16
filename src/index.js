@@ -17,14 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     "GERMANY",
     "JAPAN"
   ]
+  let mainPage = document.querySelector('.main-page')
   let styleUl = document.querySelector('#style-list')
   let countryUl = document.querySelector('#country-list')
   let featuredUl = document.querySelector('#featured-list')
   let beerUl = document.querySelector('#beer-list')
   let breweryUl = document.querySelector('#brewery-list')
-  const bgImage = document.querySelector('#monk-by-the-sea')
-  let mainPage = document.querySelector('.main-page')
-  const sidebar = document.querySelector(".sidebar")
+  let bgImage = document.querySelector('#monk-by-the-sea')
 
   // const beerURL = "http://api.brewerydb.com/v2/beers/?key=afe69a87d4126239031c4abba79cd743"
 
@@ -42,13 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show Beer Index
     if (event.target.id === "option-1") {
       styles.forEach(style => {
-        let li = document.createElement('li')
-        li.innerText = style
-        let div = document.createElement('div')
-        div.setAttribute("id", `${li.innerText}`)
-        div.setAttribute("class", "style-div")
-        div.append(li)
-        styleUl.append(div)
+        let styleLi = document.createElement('li')
+        styleLi.innerText = style
+        let styleDiv = document.createElement('div')
+        styleLi.setAttribute("id", style)
+        // styleDiv.setAttribute("class", "style-div")
+        styleDiv.append(styleLi)
+        styleUl.append(styleDiv)
         mainPage.append(styleUl)
       })
     }
@@ -56,25 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show Brewery Index
     if (event.target.id === "option-2") {
       countries.forEach(country => {
-        let li = document.createElement('li')
+        let countryLi = document.createElement('li')
+        countryLi.innerText = country
         let countryId = country.split("").filter(char => {
           return char !== " "
         }).join("").toUpperCase()
-        li.setAttribute("id", countryId)
-        li.innerText = country
-        let div = document.createElement('div')
-        div.setAttribute("class", "country-div")
-        div.append(li)
-        countryUl.append(div)
+        let countryDiv = document.createElement('div')
+        countryLi.setAttribute("id", countryId)
+        // countryDiv.setAttribute("class", "country-div")
+        countryDiv.append(countryLi)
+        countryUl.append(countryDiv)
         mainPage.append(countryUl)
       })
     }
 
     if (event.target.id === "option-3") {
-      mainPage.innerHTML += `<div>
-      <img src="assets/monk_logo_physical 2.png" alt="logo" id="monk-logo"/>
-      <p>A tribute to leading beer review platforms, such as BeerAdvocate and Untapped. Such web applications offer an extensive list of beers from all over the world, constantly updated whenever a new brew or brewery pops up on the market. Monk Brewsource is an online community space for enthusiasts and hobbyists alike.</p>
-      </div>`
+      mainPage.innerHTML += `<img src="assets/monk_logo_physical 2.png" alt="logo" id="monk-logo-full"/>
+      <p id="philosophy">A tribute to leading beer review platforms, such as BeerAdvocate and Untapped. Such web applications offer an extensive list of beers from all over the world, constantly updated whenever a new brew or brewery pops up on the market. Monk Brewsource is an online community space for enthusiasts and hobbyists alike.</p>`
     }
   }
 
@@ -137,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(beer => {
         mainPage.innerHTML += `
         <div class="beer-div" data-id="${beer.id}">
-          <h1>${beer.name}</h1>
+          <h1>${beer.name.toUpperCase()}</h1>
           <h4>${beer.brewery}</h4>
           <img class="beer-img" src="${beer.image}">
           <h4>Style: ${beer.style}</h4>
@@ -238,11 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(brewery => {
         mainPage.innerHTML += `<div class="brewery-div">
-          <h1>${brewery.name}</h1>
+          <h1>${brewery.name.toUpperCase()}</h1>
           <img class="brewery-img" src="${brewery.image}">
           <h4>${brewery.city}, ${brewery.state}</h4>
           <p>${brewery.country}</p>
-          <p>Beer Count: ${brewery.beer_count}</p>
+          <h4>Beer Count: ${brewery.beer_count}</h4>
           </div>
         `
       })

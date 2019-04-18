@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainPage.innerHTML = ""
     beerUl.innerHTML = ""
 
-    fetch('https://http://monk-brewsource-api.herokuapp.com/api/v1/beers')
+    fetch('https://monk-brewsource-api.herokuapp.com/api/v1/beers')
       .then(res => res.json())
       .then(beers => {
         let sortedBeers = beers.sort((b1,b2) => {
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     mainPage.innerHTML = ""
     breweryUl.innerHTML = ""
 
-    fetch("https://http://monk-brewsource-api.herokuapp.com/api/v1/breweries")
+    fetch("https://monk-brewsource-api.herokuapp.com/api/v1/breweries")
       .then(res => res.json())
       .then(breweries => {
         let sortedBreweries = breweries.sort((b1,b2) => {
@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const beerId = event.target.dataset.id
     mainPage.innerHTML = ""
 
-    fetch(`https://http://monk-brewsource-api.herokuapp.com/api/v1/beers/${beerId}`)
+    fetch(`https://monk-brewsource-api.herokuapp.com/api/v1/beers/${beerId}`)
       .then(res => res.json())
       .then(beer => {
         mainPage.innerHTML += `
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
         `
       })
 
-    fetch('https://http://monk-brewsource-api.herokuapp.com/api/v1/reviews')
+    fetch('https://monk-brewsource-api.herokuapp.com/api/v1/reviews')
     .then(res => res.json())
     .then(reviews => reviews.forEach(reviewObj => {
       let reviewList = document.querySelector('#review-list')
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let beerId = event.target.previousElementSibling.dataset.id
     let reviewList = document.querySelector('#review-list')
 
-    fetch("https://http://monk-brewsource-api.herokuapp.com/api/v1/reviews", {
+    fetch("https://monk-brewsource-api.herokuapp.com/api/v1/reviews", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let breweryId = event.target.dataset.id
     mainPage.innerHTML = ""
 
-    fetch(`https://http://monk-brewsource-api.herokuapp.com/api/v1/breweries/${breweryId}`)
+    fetch(`https://monk-brewsource-api.herokuapp.com/api/v1/breweries/${breweryId}`)
       .then(res => res.json())
       .then(brewery => {
         mainPage.innerHTML += `<div class="brewery-div">

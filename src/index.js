@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return 1
           }
         })
+        console.log(sortedBeers)
 
         let styleHeader = document.createElement('h2')
         styleHeader.setAttribute('class', 'index-header')
